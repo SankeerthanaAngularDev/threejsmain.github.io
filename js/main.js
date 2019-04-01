@@ -112,8 +112,7 @@
         }
 
         function onDocumentMouseDown(event) {
-            controls.enabled = false;
-            controls.removeEventListener('change', render);
+
             //
             event.preventDefault();
             id = transformControls.children[0].object.name;
@@ -134,7 +133,8 @@
 
             if (intersects.length > 0) {
 
-
+                controls.enabled = false;
+                controls.removeEventListener('change', render);
 
                 if (INTERSECTED != intersects[0].object) {
 
@@ -146,8 +146,6 @@
 
                     scene.add(transformControls);
                     id = transformControls.children[0].object.name;
-                    controls.enabled = true;
-                    controls.addEventListener('change', render);
                     animate();
 
                 } else {
@@ -158,8 +156,6 @@
                     }
                 }
             }
-            controls.enabled = true;
-            controls.addEventListener('change', render);
         }
 
 
