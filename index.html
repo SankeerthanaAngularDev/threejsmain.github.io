@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .button {
+            font: bold 11px Arial;
+            background-color: #EEEEEE;
+            color: #333333;
+            padding: 2px 6px 2px 6px;
+            border-top: 1px solid #CCCCCC;
+            border-right: 1px solid #333333;
+            border-bottom: 1px solid #333333;
+            border-left: 1px solid #CCCCCC;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div>
+        <center>
+            <a class="button" id="addTexture">Add Texture</a>
+            <a class="button" id="addPlane">Add Plane</a>
+        </center>
+        </br>
+        <center>
+            Press T to 'Translate',R to 'Rotate', S to 'Scale' the object
+        </center>
+        <div>
+            <div>
+                <div>
+                    <div height='1000' width='800' id="container">
+                    </div>
+                </div>
+            </div>
+            <script src="js/three.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+            <script src="js/OrbitControls.js"></script>
+            <script src="js/TransformControls.js"></script>
+            <script src="js/EventsControls.js"></script>
+            <script src="js/stats.min.js"></script>
+            <script src="js/main.js"></script>
+</body>
+
+</html>
