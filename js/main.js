@@ -146,15 +146,20 @@
 
                     scene.add(transformControls);
                     id = transformControls.children[0].object.name;
+                    controls.enabled = true;
+                    controls.addEventListener('change', render);
                     animate();
 
                 } else {
 
                     if (INTERSECTED); {
                         INTERSECTED = null;
+
                     }
                 }
             }
+            controls.enabled = true;
+            controls.addEventListener('change', render);
         }
 
 
