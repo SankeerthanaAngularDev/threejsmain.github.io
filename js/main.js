@@ -9,6 +9,17 @@
             loadPlane();
         });
 
+        $("#setTranslate").click(function () {
+            setTranslateMode();
+        });
+        $("#setRotate").click(function () {
+            setRotateMode();
+        });
+        $("#setScale").click(function () {
+            setScaleMode();
+        });
+
+
 
 
         function init() {
@@ -115,7 +126,6 @@
 
             //
             event.preventDefault();
-            id = transformControls.children[0].object.name;
             raycaster = new THREE.Raycaster();
             mouse = new THREE.Vector3();
             mouse.x = ((event.clientX - $('#container').offset().left) / $('#container').width()) * 2 - 1;
@@ -140,6 +150,7 @@
 
                     if (INTERSECTED); {
                         INTERSECTED = intersects[0].object;
+                        // id = intersects[0].object.name;
                     }
 
                     transformControls.attach(INTERSECTED);
@@ -212,6 +223,24 @@
                 text += possible.charAt(Math.floor(Math.random() * id));
 
             return text;
+        }
+
+        function setTranslateMode() {
+            transformControls.attach(object);
+            scene.add(transformControls);
+            transformControls.setMode("translate");
+        }
+
+        function setRotateMode() {
+            transformControls.attach(object);
+            scene.add(transformControls);
+            transformControls.setMode("rotate");
+        }
+
+        function setScaleMode() {
+            transformControls.attach(object);
+            scene.add(transformControls);
+            transformControls.setMode("scale");
         }
 
 
