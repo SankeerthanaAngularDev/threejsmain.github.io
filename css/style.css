@@ -369,6 +369,12 @@ input#menu[type="checkbox"] {
   /* Above WP toolbar. */
 }
 
+.divControls{
+  position:absolute;
+   top:0;
+   right:10px;
+}
+
 
 
 

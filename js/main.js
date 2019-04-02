@@ -108,6 +108,37 @@
                 onDocumentMouseDown(event);
             });
 
+            transformControls.addEventListener('change', function () {
+                // container.removeEventListener("click", onDocumentMouseDown);
+                // // id = transformControls.children[0].object.name;
+        
+            px = transformControls.children[0].object.position.x;
+            px1 = Number.parseFloat(px).toFixed(4);;
+            py = transformControls.children[0].object.position.y;
+            py1 = Number.parseFloat(py).toFixed(4);;
+            pz = transformControls.children[0].object.position.z;
+            pz1 = Number.parseFloat(pz).toFixed(4);;
+        
+             rx = (transformControls.children[0].object.rotation.x * (180 / Math.PI));
+             ry = (transformControls.children[0].object.rotation.y * (180 / Math.PI));
+             rz = (transformControls.children[0].object.rotation.z * (180 / Math.PI));
+        
+            $('#x-values').val(px1);
+            $('#y-values').val(py1);
+            $('#z-values').val(pz1);
+        
+            $('#rx-values').val(rx);
+            $('#ry-values').val(ry);
+            $('#rz-values').val(rz);
+        
+        
+            $('#sx-values').val(Number.parseFloat(transformControls.children[0].object.scale.x).toFixed(4));
+            $('#sy-values').val(Number.parseFloat(transformControls.children[0].object.scale.y).toFixed(4));
+            $('#sz-values').val(Number.parseFloat(transformControls.children[0].object.scale.z).toFixed(4));
+        
+            });
+
+
             $(document).on('keydown', function (event) {
 
                 switch (event.which) {
@@ -233,20 +264,20 @@
         }
 
         function setTranslateMode() {
-            transformControls.attach(object);
-            scene.add(transformControls);
+            // transformControls.attach(object);
+            // scene.add(transformControls);
             transformControls.setMode("translate");
         }
 
         function setRotateMode() {
-            transformControls.attach(object);
-            scene.add(transformControls);
+            // transformControls.attach(object);
+            // scene.add(transformControls);
             transformControls.setMode("rotate");
         }
 
         function setScaleMode() {
-            transformControls.attach(object);
-            scene.add(transformControls);
+            // transformControls.attach(object);
+            // scene.add(transformControls);
             transformControls.setMode("scale");
         }
 
