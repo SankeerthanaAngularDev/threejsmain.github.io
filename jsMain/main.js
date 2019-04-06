@@ -85,34 +85,34 @@
 
             plane1.name = makeid(5);
 
-            // var texture = new THREE.TextureLoader().load( "models/dummy_wood.jpg" );
-            // texture.wrapS = THREE.RepeatWrapping;
-            // texture.wrapT = THREE.RepeatWrapping;
-            // texture.repeat.set( 1, 1 );
+            var texture = new THREE.TextureLoader().load( "models/dummy_wood.jpg" );
+            texture.wrapS = THREE.RepeatWrapping;
+            texture.wrapT = THREE.RepeatWrapping;
+            texture.repeat.set( 1, 1 );
 
-            // var loader =  new THREE.OBJLoader();
-            // loader.load(
-            //     // resource URL
-            //     'models/dummy_obj.obj',
-            //     // called when resource is loaded
-            //     function ( object ) {
-            //         object.scale.set(2, 2, 2);
+            var loader =  new THREE.OBJLoader();
+            loader.load(
+                // resource URL
+                'models/dummy_obj.obj',
+                // called when resource is loaded
+                function ( object ) {
+                    object.scale.set(2, 2, 2);
 
-            //         object.traverse( function ( child ) {
+                    object.traverse( function ( child ) {
 
-            //             if ( child instanceof THREE.Mesh ) {
+                        if ( child instanceof THREE.Mesh ) {
     
-            //                 child.material.map = texture;
+                            child.material.map = texture;
     
-            //             }
+                        }
     
-            //         } );
+                    } );
             
-            //         scene.add( object );
-            //         objects.push(object);
-            //         transformControls.attach(object);
+                    scene.add( object );
+                    objects.push(object);
+                    transformControls.attach(object);
             
-            //     });
+                });
 
             controls = new THREE.OrbitControls(camera, renderer.domElement);
             controls.update();
