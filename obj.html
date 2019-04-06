@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Default Grid Plane with Transform Controls</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+</head>
+
+<body>
+
+    <script src="js/three.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script src="js/OrbitControls.js"></script>
+    <script src="js/TransformControls.js"></script>
+    <script src="js/OBJLoader.js"></script>
+
+    <script>
+
+        var camera, scene, renderer, transformControls, controls;
+        var objects = [];
+
+        initialize();
+        render();
+
+        function initialize() {
+
+            //creating the scene
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xffffff);
+
+            //rendering the webGL
+            renderer = new THREE.WebGLRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+
+            //setting the camera perspective
+            camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 3000);
+            camera.position.set(1000, 500, 1000);
+            camera.lookAt(0, 200, 0);
+            scene.add(camera);
+
+            //adding grid to the scene
+            var gridHelper = new THREE.GridHelper(1000, 10);
+            scene.add(gridHelper);
+
+            //adding light to the scene
+            var light = new THREE.DirectionalLight(0xffffff, 4);
+            scene.add(light);
+
+            // //adding textured plane to the scene above grid
+            // var texture = new THREE.TextureLoader().load( "img/texture.jpg" );
+            // texture.wrapS = THREE.RepeatWrapping;
+            // texture.wrapT = THREE.RepeatWrapping;
+            // texture.repeat.set( 1, 1 );
+
+
+            var material = new THREE.MeshBasicMaterial({ color: "blue" });
+            var geometry = new THREE.PlaneGeometry(200, 200);
+            var plane = new THREE.Mesh(geometry, material);
+            plane.material.side = THREE.DoubleSide;
+            scene.add(plane);
+            objects.push(plane);
+            plane.position.y = 150;
+            // transformControls.attach(plane);
+
+            var texture = new THREE.TextureLoader().load("models/dummy_wood.jpg");
+            texture.wrapS = THREE.RepeatWrapping;
+            texture.wrapT = THREE.RepeatWrapping;
+            texture.repeat.set(1, 1);
+
+            var loader = new THREE.OBJLoader();
+            loader.load(
+                // resource URL
+                'models/dummy_obj.obj',
+                // called when resource is loaded
+                function (object) {
+                    object.scale.set(2, 2, 2);
+
+                    object.traverse(function (child) {
+
+                        if (child instanceof THREE.Mesh) {
+
+                            child.material.map = texture;
+
+                        }
+
+                    });
+
+                    scene.add(object);
+                    objects.push(object);
+                    transformControls.attach(object);
+
+                });
+
+
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.update();
+            controls.addEventListener('change', render);
+
+            //adding transform controls
+            transformControls = new THREE.TransformControls(camera, renderer.domElement);
+            transformControls.addEventListener('change', render);
+
+            transformControls.addEventListener('dragging-changed', function (event) {
+                controls.enabled = !event.value;
+
+            });
+
+            transformControls.attach(plane);
+            scene.add(transformControls);
+
+            window.addEventListener('resize', onWindowResize, false);
+
+            // $("#container").mousedown(function (evenet) {
+            //     onDocumentMouseDown(event);
+            // });
+            document.body.addEventListener('click', onDocumentMouseDown, false);
+
+        }
+
+        function onDocumentMouseDown(event) {
+
+            event.preventDefault();
+            raycaster = new THREE.Raycaster();
+            mouse = new THREE.Vector3();
+            // mouse.x = ((event.clientX - $('#container').offset().left) / $('#container').width()) * 2 - 1;
+            // mouse.y = -(((event.clientY - $('#container').offset().top) / $('#container').innerHeight()) * 2 - 1);
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+
+            camera.lookAt(scene.position);
+
+            camera.updateMatrixWorld();
+
+
+            raycaster.setFromCamera(mouse, camera, objects);
+            var intersects = raycaster.intersectObjects(objects);
+            console.log(intersects);
+
+            if (intersects.length > 0) {
+
+                // controls.enabled = false;
+                // controls.removeEventListener('change', render);
+
+                if (INTERSECTED != intersects[0].object) {
+
+                    if (INTERSECTED); {
+                        INTERSECTED = intersects[0].object;
+                        // id = intersects[0].object.name;
+                    }
+
+                    transformControls.attach(INTERSECTED);
+
+                    scene.add(transformControls);
+                    // id = transformControls.children[0].object.name;
+                    animate();
+
+                } else {
+
+                    if (INTERSECTED); {
+                        INTERSECTED = null;
+
+                    }
+                }
+            }
+        }
+
+        function onWindowResize() {
+
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            render();
+
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            // transformControls.update();
+            controls.update();
+            transformControls.updateMatrixWorld();
+            transformControls.addEventListener('change', render);
+            render();
+        }
+
+        function render() {
+
+            renderer.render(scene, camera);
+
+        }
+
+    </script>
+
+</body>
+
+</html>
